@@ -10,30 +10,8 @@ import google from '../../images/google.png'
 const GoogleAuth = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
-		const [home, setHome] = useState('');
-	// const checkLoginStatus =() => {
-	// 	axios
-  //     .get(
-  //       "http://localhost:3000/api/v1/logged_in",
-  //       { withCredentials: true }
-  //     )
-  //     .then(response => {
-	// 			if(response.data.logged_in ){
-	// 				history.push('/')
-	// 				console.log("check if logged in", response.data)
-	// 				dispatch({ type: LOGGEDINSTATUS, payload: 'LOGGED_IN'})
-	// 				dispatch({ type: GETCURRENTUSER, payload: response.data.user})
-	// 			} 
-  //     })
-  //     .catch(error => {
-  //       console.log("check login error", error);
-  //     });
-	// }
 	
-	// useEffect(() => {
-	// 	checkLoginStatus()
-  // }, )
-
+	
 		const responseGoogle = response => {
 			logInWithProvider('google', response)
 			localStorage.setItem("current_user", JSON.stringify(response));

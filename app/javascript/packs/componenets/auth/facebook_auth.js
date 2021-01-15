@@ -14,32 +14,10 @@ const FacebookAuth = () => {
 	const history = useHistory();
 	const [home, setHome] = useState('');
 
-	// const checkLoginStatus =() => {
-	// 	axios
-  //     .get(
-  //       "http://localhost:3000/api/v1/logged_in",
-  //       { withCredentials: true }
-  //     )
-  //     .then(response => {
-	// 			if(response.data.logged_in ){
-	// 				console.log("check if logged in", response.data)
-	// 				dispatch({ type: LOGGEDINSTATUS, payload: 'LOGGED_IN'})
-	// 				dispatch({ type: GETCURRENTUSER, payload: response.data.user})
-	// 				history.push('/')
-	// 			} 
-  //     })
-  //     .catch(error => {
-  //       console.log("check login error", error);
-  //     });
-	// }
-
-	// useEffect(() => {
-	// 	checkLoginStatus()
-	// 	console.log("great is working")
-  // }, [home])
+	
 
 		const responseFacebook = response => {
-			console.log("user details: ", response)
+			console.log("facebook details: ", response)
 			logInWithProvider('facebook', response)
 			localStorage.setItem("current_user", JSON.stringify(response));
 			history.push('/')

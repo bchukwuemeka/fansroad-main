@@ -35,7 +35,7 @@ class Api::V1::UsersController < ApplicationController
   
     private
     def user_params
-      params.permit(:email, :name, :password)
+      params.permit(:email, :name, :password, :username, :bio, :location, :website, :amazon)
     end
   
     def ensure_params_exist

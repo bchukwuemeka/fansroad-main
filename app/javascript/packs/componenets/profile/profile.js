@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 // import { GETCURRENTUSER, LOGGEDINSTATUS } from '../action/type'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faCog } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faCog, faMapMarkerAlt } from '@fortawesome/free-solid-svg-icons';
 import fb from '../../images/fb1.jpg'
 	
 
@@ -40,7 +40,7 @@ const Profile = () => {
 							<p>0 No Post</p>
 						</div>
 						<div className='round-image float-left'>
-							<img src={fb} />
+							<img src={current_user.image } /> 
 						</div>
 						<div className='float-right edit-profile'>
 							<NavLink  className="" exact to='/settings/profile'>
@@ -49,7 +49,12 @@ const Profile = () => {
 						<div className='clearfix'></div>
 						<div className='usersname-profile' > 
 							<p>{current_user.name} </p>
-							<span> @10328490384 Active</span>
+							<span > @{current_user.username} Active</span>
+						</div>
+
+						<div className='bio-profile usersname-profile ' > 
+							<p>{current_user.bio} </p>
+							<span> <FontAwesomeIcon icon={faMapMarkerAlt} size="1x" />{current_user.location} </span>
 						</div>
 
 					</div>
@@ -60,6 +65,12 @@ const Profile = () => {
 			</>
 				
 		)
+}
+
+Profile.defaultProps = {
+    image: "https://www.clipartmax.com/png/middle/40-400884_social-media-avatar-photography-digital-media-clip-social-media-avatar-photography-digital.png",
+    eyeColor: "deepblue",
+    age: "120"
 }
 
 export default Profile;
