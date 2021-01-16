@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  default_url_options :host => "localhost:3000"
   get "signed_in", to: "pages#signed_in"
   root 'pages#home'
 

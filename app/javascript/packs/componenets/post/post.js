@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useHistory } from "react-router-dom";
+import { useHistory, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 // import { GETCURRENTUSER, LOGGEDINSTATUS } from '../action/type'
@@ -13,42 +13,59 @@ const Post = () => {
 	const loggedInStatus = useSelector(state => state.loggedInStatus.payload);
 	const current_user = JSON.parse(localStorage.getItem("current_user")) ? true : false
 	
-	const displayNav = () => {
-		const [state, setState] = useState({
-			description: '',
-			featured_image: null
+	
+	const [state, setState] = useState({
+		description: '',
+		featured_image: null,
+		message: ''
+	});
+	
+	const handleChange = (event) => {
+		const name = event.target.name
+		const value = event.target.value
+		setState({
+			...state, [name]: value 
 		});
-
-		const handleChange = (event) => {
-			const name = event.target.name
-			const value = event.target.value
-			setState({
-				...state, [name]: value 
-			});
-		}
-
-		if(current_user){
-			return(
-				
-				<div className="col">
-					Post Page
-				</div>
-
-			)
+	}
+	
+	const onImageChange = event => { 
+		setState({ featured_image: event.target.files[0] });
+		console.log('image: ', event.target.files)
+	};
+	const handleSubmit = async event => {
+		event.preventDefault();
+		const endpoint = `/api/v1/posts`;
+		const formData = new FormData();
+    formData.append('description', state.description);
+    formData.append('featured_image', state.featured_image);
+		try {
+					const res = await axios.post( endpoint,
+					formData
+					,
+						{ withCredentials: true })
+						setState({...state, message: 'Post created'})
+						console.log('post: ', res)				
+				}catch(error)  {
+					setState({...state, message: `${error}`})
+					console.log("error", error);
+			}
+	}	
+	
+	const displayImage = () =>{
+		if(state.featured_image){
+			return <img src={featured_image}/>
 		}
 	}
+	useEffect(() => {
+		displayImage()
+  }, [])
 
 		return (
-			<>
-			{displayNav()}
-				<div className="container-fluid m-5 row loginDiv">
-				<div className="col-md-8"></div>
-				<div className="col-md-4  loginForm ">
-					<FacebookAuth />
-					<br />
-					<GoogleAuth />
+			<>	
+				<span className='notice'>{state.message}</span>
+				<div className=" pt-1 postDiv">
+					{displayImage}
 					<form onSubmit={handleSubmit}>
-								
 						<div className="form-floating mb-4">
 							<input
 								type="file" accept="image/*" multiple={false}
@@ -60,19 +77,16 @@ const Post = () => {
 							<textarea
 								type="password" name="description" id="form1Example2"
 								className="form-control" value={state.description}
-								onChange={handleChange} placeholder="description" required
+								onChange={handleChange} placeholder="description" 
 							>
 							</textarea>
 						 </div>	
 						
-						<button type="submit" className="btn btn-primary btn-block">Post</button>
+						<button type="submit" className="btn btn-primary ">Post</button>
 
 					</form>
 					<br />
-					<p>Don't have an account yet?</p>
-					<a onClick={handleRegister} className="text-primary ">Sign Up Here</a>
-
-				</div>
+			
       </div>
 			</>
 				

@@ -44,7 +44,7 @@ ActiveRecord::Schema.define(version: 2021_01_15_174441) do
   end
 
   create_table "posts", force: :cascade do |t|
-    t.text "descriptioin"
+    t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

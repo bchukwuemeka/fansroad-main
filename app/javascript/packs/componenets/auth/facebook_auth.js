@@ -17,8 +17,8 @@ const FacebookAuth = () => {
 	
 
 		const responseFacebook = response => {
-			console.log("facebook details: ", response)
 			logInWithProvider('facebook', response)
+			console.log("facebook details: ", response)
 			localStorage.setItem("current_user", JSON.stringify(response));
 			history.push('/')
 		}

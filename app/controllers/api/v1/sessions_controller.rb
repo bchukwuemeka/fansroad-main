@@ -1,6 +1,6 @@
 class Api::V1::SessionsController < ApplicationController
   # include CurrentUserConcern
-  before_action :set_current_user
+  # before_action :set_current_user
   before_action :sign_in_params, only: :create
   skip_before_action :verify_authenticity_token, :only => [:create, :destroy, :logged_in]
   
@@ -26,7 +26,9 @@ class Api::V1::SessionsController < ApplicationController
   end
 
   def logged_in
-    if @current_user
+    
+    if session[:user_id]
+      @current_user = User.find(session[:user_id])
       render json: {
         logged_in: true,
         user: @current_user
@@ -48,6 +50,5 @@ class Api::V1::SessionsController < ApplicationController
       @current_user = User.find(session[:user_id])
     end
   end
-
 
 end
