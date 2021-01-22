@@ -81,11 +81,17 @@
     position:fixed;
     bottom:0;
 	}
+	.post-btn{
+		top: 10px !important;
+	}
 }
 
 @media only screen and (max-width: 600px) {
 	.fa-2x{
 		font-size: 20px;
+	}
+	.image-upload .fa-2x{
+		font-size: 30px;
 	}
 }
 
@@ -233,12 +239,70 @@
 .postDiv{
 	width: 90%;
 	margin: 0 auto;
+	border-bottom: #cecccc solid 1px;
 }
 .preview-image{
 	list-style-type: none;
 	display: flex;
+	margin: 0;
+	padding: 0;
 }
 .preview-image li {
+	margin: 5px;
+	position: relative;
+}
+.preview-image li span{
+	font-size: 21px;
+	font-weight: 500;
+  width: 25px;
+  height: 27px;
+	color: #f5f5f5;
+	background-color: #1b99f9;
+	z-index: 100;
+	position: absolute;
+	border-radius: 50%;
+	right: 10px;
+	text-align: center;
+	top: 5px;
+	cursor: pointer;
+}
+.postDiv textarea {
+	border: none;
+	padding: 0;
+}
+.postDiv .fa-1x{
+	color: black;
 	margin-right: 10px;
+}
+.post-name{
+	border-bottom: #cecccc solid 1px;
+	padding: 5px 0 5px 0;
+}
+.image-upload>input {
+  display: none;
+}
+.image-upload .fa-2x{
+	color: #cecccc;
+	cursor: pointer;
+}
+.post-btn{
+	position: fixed;
+  top: 60px;
+  right: 30px;
+	border-radius: 13px !important;
+}
+.plus-label{
+	background-color: #ebe9e9;
+	height: 130px;
+	width: 65px;
+	text-align: center;
+	margin: 5px;
+	border-radius: 30px;
+	cursor: pointer;
+}
+.plus-label .fa-2x{
+	columns: #bfbdbd;
+	margin-top: 40px;
+
 }
 /*# sourceMappingURL=main.css.map */

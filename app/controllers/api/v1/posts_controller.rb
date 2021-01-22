@@ -8,7 +8,7 @@ class Api::V1::PostsController < ApplicationController
         render json: {
           messages: "Post Successfully",
           is_success: true,
-          data: @post
+          data: post
         }, status: 200
       else
         render json: {
@@ -48,7 +48,7 @@ class Api::V1::PostsController < ApplicationController
   
     private
     def post_params
-      params.permit(:description, :featured_image, :user_id)
+      params.permit(:description, :user_id, images: [])
     end
   
    
