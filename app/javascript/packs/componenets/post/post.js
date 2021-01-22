@@ -11,12 +11,13 @@ const Post = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const loggedInStatus = useSelector(state => state.loggedInStatus.payload);
-	const current_user = JSON.parse(localStorage.getItem("current_user")) ? true : false
+	const current_user = JSON.parse(localStorage.getItem("current_user"))
 	
 	
 	const [state, setState] = useState({
 		description: '',
-		featured_image: null,
+		featured_image: [],
+		images_url: [],
 		message: ''
 	});
 	
@@ -26,11 +27,22 @@ const Post = () => {
 		setState({
 			...state, [name]: value 
 		});
+			console.log('image: ', state.featured_image)
+		console.log('url: ', state.images_url)
 	}
 	
-	const onImageChange = event => { 
-		setState({ featured_image: event.target.files[0] });
-		console.log('image: ', event.target.files)
+	const onImageChange = e => { 
+		const files = e.target.files
+		setState({ featured_image: [...state.featured_image, ...files],
+		 });
+		for(let i =0; i<files.length; i++){
+			console.log('files: ', files[i])
+			console.log('urls: ', URL.createObjectURL(files[i]))
+			setState({ featured_image: [...state.featured_image, files[i]],
+			images_url: [...state.images_url,
+			 URL.createObjectURL(files[i])]
+		 });
+		}
 	};
 	const handleSubmit = async event => {
 		event.preventDefault();
@@ -38,6 +50,7 @@ const Post = () => {
 		const formData = new FormData();
     formData.append('description', state.description);
     formData.append('featured_image', state.featured_image);
+		formData.append('user_id', current_user.id);
 		try {
 					const res = await axios.post( endpoint,
 					formData
@@ -51,24 +64,28 @@ const Post = () => {
 			}
 	}	
 	
-	const displayImage = () =>{
-		if(state.featured_image){
-			return <img src={featured_image}/>
-		}
-	}
+	// const displayImage = () =>{
+	// 	if(state.images_url){
+	// 		return <img src={state.images_url} width="100px" height="100px" />
+	// 	}
+	// }
+	const displayImage = state.images_url.map((image_url) =>
+  	<li key={image_url}> <img  src={image_url} width="100px" height="100px" /> </li>
+	);
 	useEffect(() => {
-		displayImage()
   }, [])
 
 		return (
 			<>	
 				<span className='notice'>{state.message}</span>
 				<div className=" pt-1 postDiv">
-					{displayImage}
 					<form onSubmit={handleSubmit}>
 						<div className="form-floating mb-4">
+							<ul className="d-flex preview-image">
+								 {state.images_url.length > 0  && displayImage}
+							</ul>
 							<input
-								type="file" accept="image/*" multiple={false}
+								type="file" accept="image/*" multiple
 								onChange={onImageChange} 
 							/>
 						 </div>
@@ -77,8 +94,9 @@ const Post = () => {
 							<textarea
 								type="password" name="description" id="form1Example2"
 								className="form-control" value={state.description}
-								onChange={handleChange} placeholder="description" 
+								onChange={handleChange} placeholder="description" rows="5"
 							>
+								
 							</textarea>
 						 </div>	
 						

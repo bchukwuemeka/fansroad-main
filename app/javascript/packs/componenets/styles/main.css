@@ -234,4 +234,11 @@
 	width: 90%;
 	margin: 0 auto;
 }
+.preview-image{
+	list-style-type: none;
+	display: flex;
+}
+.preview-image li {
+	margin-right: 10px;
+}
 /*# sourceMappingURL=main.css.map */

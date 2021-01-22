@@ -11,7 +11,6 @@ class Api::V1::PostsController < ApplicationController
           data: @post
         }, status: 200
       else
-        post.featured_image.purge
         render json: {
           messages: "Post creation Failded",
           is_success: false,
@@ -49,7 +48,7 @@ class Api::V1::PostsController < ApplicationController
   
     private
     def post_params
-      params.permit(:description, :featured_image)
+      params.permit(:description, :featured_image, :user_id)
     end
   
    
