@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { useHistory, NavLink } from "react-router-dom";
+import { useHistory, NavLink, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 // import { GETCURRENTUSER, LOGGEDINSTATUS } from '../action/type'
@@ -11,24 +11,39 @@ import fb from '../../images/fb1.jpg'
 const Profile = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
+	const {username} = useParams()
 	const loggedInStatus = useSelector(state => state.loggedInStatus.payload);
 	const [state, setState] = useState({
 			user: {},
 			message: ''
 	});
 	let current_user = JSON.parse(localStorage.getItem("current_user"))
-	const asignUser =() => {
-		if(current_user['tokenObj'] ){
-			current_user = current_user['profileObj']
+	const getUser = async () => {
+		try {
+					const res = await axios.get(`http://localhost:3000/api/v1/users/${username}`);
+					setState({...state, user: res.data})
+					console.log('user res: ', res)
+					console.log('user new: ', state.user)
+			} catch (err) {
+
+					console.error('user fetch failed', err);
+			}
+	}
+	const editInfo = () =>{
+		if(state.user.username === current_user.username){
+			console.log('user new: ', state.user)
+			return (
+				<div className='float-right edit-profile'>
+	
+			<NavLink  className="" exact to={`/settings/${state.user.username}`}>
+			<FontAwesomeIcon icon={faCog} size="1x" /> EDIT PROFILE </NavLink>
+			</div>
+			)
 		}
-		setState({...state, user: current_user})
-		console.log('current_user: ', current_user)
-		console.log('user: ', state.user)
 	}
 	useEffect(() => {
-		setState({...state, user: current_user})
-		asignUser()
-  }, [])
+		getUser()
+  }, [username])
 
 
 		return (
@@ -36,25 +51,22 @@ const Profile = () => {
 				<div className='row user-profile'>
 					<div className='col-md-8'>
 						<div className='bg-image'>
-							<p> <NavLink   exact to='/'><FontAwesomeIcon icon={faArrowLeft} size="1x" /> </NavLink>{current_user.name}</p>
+							<p> <NavLink   exact to='/'><FontAwesomeIcon icon={faArrowLeft} size="1x" /> </NavLink>{state.user.name}</p>
 							<p>0 No Post</p>
 						</div>
 						<div className='round-image float-left'>
-							<img src={current_user.image } /> 
+							<img src={state.user.image } /> 
 						</div>
-						<div className='float-right edit-profile'>
-							<NavLink  className="" exact to='/settings/profile'>
-								<FontAwesomeIcon icon={faCog} size="1x" /> EDIT PROFILE </NavLink>
-						</div>
+						{editInfo()}
 						<div className='clearfix'></div>
 						<div className='usersname-profile' > 
-							<p>{current_user.name} </p>
-							<span > @{current_user.username} Active</span>
+							<p>{state.user.name} </p>
+							<span > @{state.user.username} Active</span>
 						</div>
 
 						<div className='bio-profile usersname-profile ' > 
-							<p>{current_user.bio} </p>
-							<span> <FontAwesomeIcon icon={faMapMarkerAlt} size="1x" />{current_user.location} </span>
+							<p>{state.user.bio} </p>
+							<span> <FontAwesomeIcon icon={faMapMarkerAlt} size="1x" />{state.user.location} </span>
 						</div>
 
 					</div>

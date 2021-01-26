@@ -81,7 +81,7 @@ const EditProfile = () => {
 				<div className="row update-user">
 					<span className='notice'>{state.message}</span>
 					<div className='col-md-4'>
-						<p> <NavLink   exact to='/profile'><FontAwesomeIcon icon={faArrowLeft} size="1x" /> </NavLink> Settings </p>
+						<p> <NavLink   exact to={`/${current_user.username}`}><FontAwesomeIcon icon={faArrowLeft} size="1x" /> </NavLink> Settings </p>
 					</div>
 					<div className='col-md-8'>
 						<form onSubmit={handleSubmit}>

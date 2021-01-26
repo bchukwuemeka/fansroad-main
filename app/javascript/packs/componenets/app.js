@@ -56,11 +56,11 @@ const App = () => {
 				{/* <Route exact path='/' component={SignIn} /> */}
 				<Route exact path='/register' component={Registration}/>
 				<Route exact path='/notification' component={Notification}/>
-				<Route exact path='/profile' component={Profile}/>
+				<Route exact path='/:username' component={Profile}/>
 				<Route exact path='/chat' component={Chat}/>
 				<Route exact path='/post/create' component={Post}/>
 				<Route exact path='/login' component={Login}/>
-				<Route exact path='/settings/profile' component={EditProfile}/>
+				<Route exact path='/settings/:username' component={EditProfile}/>
 				<PrivateRoute path="/" component={Home} />
 			</Switch>
 			<Footer />

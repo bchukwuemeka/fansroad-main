@@ -15,7 +15,7 @@ const Navbar = () => {
 	const history = useHistory();
 	const loggedInStatus = useSelector(state => state.loggedInStatus.payload);
 	const current_user = JSON.parse(localStorage.getItem("current_user")) ? true : false;
-
+	const  user = JSON.parse(localStorage.getItem("current_user"))
 	const handleLogout = () => {
 		localStorage.clear();
 		axios
@@ -54,11 +54,11 @@ const Navbar = () => {
 						<FontAwesomeIcon icon={faUserCircle} size="2x" />
 					</a>
 					<div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-						<NavLink   exact to='/profile'> <FontAwesomeIcon icon={faUserCircle} size="1x" />
+						<NavLink   exact to={`/${user.username}`}> <FontAwesomeIcon icon={faUserCircle} size="1x" />
 						Profile</NavLink>
 						<a className="dropdown-item" href="#">Another action</a>
 						<a className="dropdown-item" href="#">Something else here</a>
-						<NavLink className="dropdown-item"  exact to='/settings/profile'><FontAwesomeIcon icon={faCog} size="1x" /> Settings</NavLink>
+						<NavLink className="dropdown-item"  exact to={`/settings/${user.username}`}><FontAwesomeIcon icon={faCog} size="1x" /> Settings</NavLink>
 						<GoogleLogout
 							clientId = '150361839161-e76sgvul3eas6in7d6o6veuf4d5hgfsb.apps.googleusercontent.com'
 							buttonText="Logout"
@@ -71,7 +71,7 @@ const Navbar = () => {
 								
 							onLogoutSuccess={handleLogout}>
 							</GoogleLogout>
-						
+						{console.log("navbar user:", user)}
 					</div>
 				</div>
 

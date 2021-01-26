@@ -10,7 +10,8 @@ Rails.application.routes.draw do
       resources :posts
       get "logged_in", to: "sessions#logged_in"
       delete "logout", to: "sessions#destroy"
-      resources :users
+      resources :users, only: [:index, :destroy, :update]
+      get "users/:username", to: "users#show"
       post '/omniauth/facebook/callback' => 'omniauths#redirect_callbacks'
       post '/omniauth/google/callback' => 'google_auths#redirect_callbacks'
       # devise_scope :user do

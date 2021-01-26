@@ -29,13 +29,13 @@ class Api::V1::UsersController < ApplicationController
     end
 
     def show 
-      @user = User.find_by(id: params[:id])
+      @user = User.find_by(username: params[:username])
       render json: @user
     end
   
     private
     def user_params
-      params.permit(:email, :name, :password, :username, :bio, :location, :website, :amazon)
+      params.permit(:email, :name, :password, :username, :bio, :location, :website, :amazon, :avatar, :background_photo)
     end
   
     def ensure_params_exist

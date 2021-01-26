@@ -1,19 +1,39 @@
- local:
-  service: Disk
-  root: <%= Rails.root.join("storage") %>
+#  local:
+#     service: Cloudinary
+#     secure: true
  
- test:
-  service: Disk
-  root: <%= Rails.root.join("tmp/storage") %>
+#  test:
+#   service: Cloudinary
+#   secure: true
+
+# cloudinary:
+#   service: Cloudinary
+cloudinary_defaults: &cloudinary_defaults
+  service: Cloudinary
+  secure: true
+
+cloudinary_test:
+  tags:
+    - test
+  <<: *cloudinary_defaults
+
+cloudinary_development:
+  tags:
+    - development
+  <<: *cloudinary_defaults
+
+cloudinary_production:
+  tags:
+    - production
+  <<: *cloudinary_defaults
 
 
-
-amazon:
-  service: S3
-  access_key_id: ""
-  secret_access_key: ""
-  bucket: ""
-  region: "" # e.g. 'us-east-1'
+  # amazon:
+  #   service: S3
+  #   access_key_id: ""
+  #   secret_access_key: ""
+  #   bucket: ""
+  #   region: "" # e.g. 'us-east-1'
 
 
 # Remember not to checkin your GCS keyfile to a repository

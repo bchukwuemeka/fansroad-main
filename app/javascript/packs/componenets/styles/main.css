@@ -36,7 +36,6 @@
   max-width: 80%;
 }
 .navbar{
-	position: relative;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -46,6 +45,10 @@
 		border-bottom: 1px solid rgba(138,150,163,.25);
 		box-shadow: 0 0 2px rgba(0,0,0,.16);
 		margin: 0;
+		position: sticky;
+		top: 0px;
+    background-color: white;
+		z-index: 100;
 }
 .fa-2x  {
 	color: rgba(138,150,163,.25);
@@ -78,11 +81,16 @@
 	.footer{
     display: flex;
 		clear: both;
-    position:fixed;
+    position: sticky;
     bottom:0;
+		background-color: #fff;
+		z-index: 100;
 	}
 	.post-btn{
 		top: 10px !important;
+	}
+	.home-bottom{
+		top: 0px !important;
 	}
 }
 
@@ -304,5 +312,68 @@
 	columns: #bfbdbd;
 	margin-top: 40px;
 
+}
+.image-username{
+	max-width: 280px;
+}
+.image-username .poster-name{
+	font-size: 16px;
+	font-weight: 700;
+}
+.image-username .poster-name:hover{
+	text-decoration: underline;
+}
+.image-username .poster-username{
+	font-size: 14px;
+	color: #bfbdbd;
+}
+.image-username .poster-username:hover{
+	text-decoration: underline;
+	color: #2a9df4;
+}
+.image-username img{
+	height: 60px;
+	width: 60px;
+	border-radius: 50%;
+	margin-right: 7px;
+}
+
+.image-username a{
+	color: #000;
+  text-decoration: none;
+  display: block;
+}
+.home-bottom{
+	height: 60px;
+	border-bottom: #cecccc solid 1px;
+	position: sticky;
+	top: 50px;
+  background-color: white;
+	padding-top: 10px;
+	z-index: 100;
+}
+.home-div{
+	width: 80%;
+	margin: 0 auto;
+}
+.post-header{
+	position: relative;
+}
+.post-date{
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	font-size: 15px;
+	color: #bfbdbd;
+}
+
+@media (min-width: 576px) {
+	.container, .container-sm {
+    max-width: 600px !important;
+	}
+}
+
+.post-show-images {
+	max-height: 700px;
 }
 /*# sourceMappingURL=main.css.map */

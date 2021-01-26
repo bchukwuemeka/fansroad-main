@@ -33,8 +33,6 @@ const Post = () => {
 	const onImageChange = e => { 
 		const files = e.target.files
 		console.log('files', files)
-		// setState({ featured_image: files
-		//  });
 		for(let i =0; i<files.length; i++){
 			console.log('files: ', files[i])
 			console.log('urls: ', URL.createObjectURL(files[i]))
@@ -105,8 +103,8 @@ const Post = () => {
 				<span className='notice'>{state.message}</span>
 				<div className=" pt-1 postDiv">
 					<div className="post-name"> 
-						<h6> <NavLink   exact to='/'><FontAwesomeIcon icon={faArrowLeft} size="1x" /> </NavLink> NEW POST 
-						</h6>
+						<h4> <NavLink   exact to='/'><FontAwesomeIcon icon={faArrowLeft} size="1x" /> </NavLink> NEW POST 
+						</h4>
 					</div>
 					<ul className="d-flex preview-image">
 								 { state.images_url.length > 0  && displayImage }

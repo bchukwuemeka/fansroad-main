@@ -1,0 +1,18 @@
+development:
+  cloud_name: fansroad
+  api_key: '419718481297643'
+  api_secret: f-wfCXiDjF2KqfbH_fN07npFe88
+  enhance_image_tag: true
+  static_file_support: false
+production:
+  cloud_name: fansroad
+  api_key: '419718481297643'
+  api_secret: f-wfCXiDjF2KqfbH_fN07npFe88
+  enhance_image_tag: true
+  static_file_support: true
+test:
+  cloud_name: fansroad
+  api_key: '419718481297643'
+  api_secret: f-wfCXiDjF2KqfbH_fN07npFe88
+  enhance_image_tag: true
+  static_file_support: false

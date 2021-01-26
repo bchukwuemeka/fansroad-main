@@ -2,6 +2,8 @@ class User < ApplicationRecord
   acts_as_token_authenticatable
   before_create :set_username
   has_many :posts
+  has_one_attached :avatar
+  has_one_attached :background_photo
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,

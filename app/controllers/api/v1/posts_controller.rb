@@ -8,7 +8,7 @@ class Api::V1::PostsController < ApplicationController
         render json: {
           messages: "Post Successfully",
           is_success: true,
-          data: post
+          data: post,
         }, status: 200
       else
         render json: {
@@ -20,7 +20,7 @@ class Api::V1::PostsController < ApplicationController
     end
 
     def index
-     @posts = Post.all 
+     @posts = Post.all
      render json: @posts
     end
 

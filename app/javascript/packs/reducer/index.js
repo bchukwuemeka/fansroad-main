@@ -1,5 +1,5 @@
 import {combineReducers} from 'redux';
-import { GETCURRENTUSER, LOGGEDINSTATUS } from '../action/type';
+import { GETCURRENTUSER, LOGGEDINSTATUS, GETPOSTS } from '../action/type';
 
 
 const currentUserReducer = (state = {}, {type, payload}) =>{
@@ -19,6 +19,7 @@ const loggedInReducer = (state = {}, {type, payload}) =>{
 			return state;
 	} 
 }
+
 
 const rootReducer = combineReducers({
 	current_user: currentUserReducer,
