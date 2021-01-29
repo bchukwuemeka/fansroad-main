@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import { useHistory, NavLink } from "react-router-dom";
+import { useHistory, NavLink, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 // import { GETCURRENTUSER, LOGGEDINSTATUS } from '../action/type'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faImage, faPlus, faLifeRing } from '@fortawesome/free-solid-svg-icons';
 
-const Post = () => {
+const EditPost = () => {
 	const loggedInStatus = useSelector(state => state.loggedInStatus.payload);
 	const current_user = JSON.parse(localStorage.getItem("current_user"))
-	
+	const {id} = useParams()
 	
 	const [state, setState] = useState({
 		description: '',
@@ -17,7 +17,55 @@ const Post = () => {
 		images_url: [],
 		message: ''
 	});
-	
+	const [post, setPost] = useState({})
+
+	const getPost = async () => {
+		try {
+					const res = await axios.get(`http://localhost:3000/api/v1/posts/${id}`);
+					// const imagesObj = urlToObject(res.data.images)
+					setState({description: res.data.description,
+					featured_image: res.data.images,
+					images_url: res.data.images})
+					setPost(res.data)
+			} catch (err) {
+					console.error(err);
+			}
+	}
+	useEffect(() => {
+		getPost()
+  }, [])
+
+	// const urlToObject= (arr)=> {
+	// 	const imgs = []
+		
+	// 	for(let j = 0; j<arr.length; j++){
+			
+	// 		const ab = new ArrayBuffer(arr[j].length)
+	// 		const ia = new Uint8Array(ab);
+	// 		for (let i = 0; i < ia.length; i++) {
+	// 			console.log(arr[j].length)
+	// 			ia[i] = arr[j].charCodeAt(i);
+	// 		}
+	// 		const blob = new Blob([ia], {
+	// 			type: 'image/jpeg'
+	// 		});
+	// 		const file = new File([blob], "image.jpg");
+	// 		console.log(file)
+
+	// 		imgs.push(file)
+	// 	}
+	// 	return imgs
+	// }
+
+
+	// const convertBlobToObj = (images ) => {
+	// 	let imgs = []
+	// 	for(let i = 0; i<images.length; i++){
+	// 		imgs.push(URL.revokeObjectURL(images[i]))
+	// 	}
+	// 	console.log('converted blob', imgs)
+	// 	return imgs
+	// }
 	const handleChange = (event) => {
 		const name = event.target.name
 		const value = event.target.value
@@ -43,20 +91,21 @@ const Post = () => {
 	};
 	const handleSubmit = async event => {
 		event.preventDefault();
-		const endpoint = `/api/v1/posts`;
-		const formData = new FormData();
-    formData.append('description', state.description);
-		formData.append('user_id', current_user.id);
+		const endpoint = `/api/v1/posts/${post.id}`;
+		const formD = new FormData();
+    formD.append('description', state.description);
+		formD.append('user_id', current_user.id);
 		for(let i =0; i<state.featured_image.length; i++){
-			formData.append('images[]', state.featured_image[i]);
+			formD.append('images[]', state.featured_image[i]);
 		}
 		
+		console.log("formdata", formD)
 		try {
-					const res = await axios.post( endpoint,
-					formData
+					const res = await axios.patch(endpoint,
+				formD
 					,
 						{ withCredentials: true })
-						setState({...state, message: 'Post created'})
+						setState({...state, message: 'Post updated successfully'})
 						console.log('post: ', res)
 						setState({ description: '', featured_image: [], images_url: [], message: ''});
 				}catch(error)  {
@@ -68,6 +117,7 @@ const Post = () => {
 	const removeImage = (image, index) =>{
 		const images_url = state.images_url.filter(function(e) { return e !== image })
 		const featured_image = state.featured_image.splice(index, 1)
+		// const featured_image = state.featured_image.filter(function(e) { return e !== image })
 		setState({ images_url: images_url, featured_image: featured_image})
 		console.log('image_url: ',state.images_url)
 	}
@@ -93,15 +143,14 @@ const Post = () => {
 		</div>
 	 )
 	};
-	useEffect(() => {
-  }, [])
+
 
 		return (
 			<>	
 				<span className='notice'>{state.message}</span>
 				<div className=" pt-1 postDiv">
 					<div className="post-name"> 
-						<h4> <NavLink   exact to='/'><FontAwesomeIcon icon={faArrowLeft} size="1x" /> </NavLink> NEW POST 
+						<h4> <NavLink   exact to='/'><FontAwesomeIcon icon={faArrowLeft} size="1x" /> </NavLink> EDIT POST 
 						</h4>
 					</div>
 					<ul className="d-flex preview-image">
@@ -131,7 +180,7 @@ const Post = () => {
 						
 						<button type="submit" className="btn btn-primary post-btn" 
 						disabled={ !state.description && state.images_url.length <=0 }>
-							Post
+							EDIT
 						</button>
 
 					</form>
@@ -143,7 +192,7 @@ const Post = () => {
 		)
 }
 
-export default Post;
+export default EditPost;
 
 
 

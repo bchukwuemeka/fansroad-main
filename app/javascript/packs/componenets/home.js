@@ -43,9 +43,15 @@ const Home = ( ) => {
 	}
 
     return (
-			<div className="home-div">
+			<div className="home-div row">
 				{displayContent()}
-				<PostIndex />
+				<div className="col-md-8">
+					<PostIndex />
+				</div>
+				<div className="col-md-4">
+					
+				</div>
+				
 			</div>
     );
 }

@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import { useHistory, NavLink } from "react-router-dom";
 import FbImageLibrary from 'react-fb-image-grid'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEllipsisH } from '@fortawesome/free-solid-svg-icons';
+
 
 const PostShow = ({ post} ) => {
 	const images = post.images
@@ -11,10 +14,6 @@ const PostShow = ({ post} ) => {
 		)
 	}
 	
-	// var images = post.images.map(function(image, i) {
-
-	// 	return (<img key={i} src={image}  />);
-	// });
 
     return (
 			<div className="post-show mt-4">
@@ -29,13 +28,29 @@ const PostShow = ({ post} ) => {
 						</div>
 						<div className="clearfix"></div>
 					</div>
-					
 					<div className="post-date">
-						<p> {post.created_at}</p>
+						<div >
+							<p>{post.created_at}</p>
+						</div>
+						<div class="dropdown post-dots ">	
+								<a className='dots' type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								<FontAwesomeIcon icon={faEllipsisH} size="2x" />
+							</a>
+							<div className="dropdown-menu post-dropdow dropdown-menu-right"
+							aria-labelledby="dropdownMenuButton">
+								<NavLink  className="dropdown-item"  exact to={`/posts/edit/${post.id}`}>
+									EDIT POST 
+								</NavLink>
+								<a className="dropdown-item" href="#">Another action</a>
+								<a className="dropdown-item" href="#">Something else here</a>
+							</div>
+						</div>
 					</div>
+					
 				</div>
 				<div className="clearfix"></div>
 				
+								
 				<p> {post.description}</p>
 				
 				{ displayimages()}

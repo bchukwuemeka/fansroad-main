@@ -14,6 +14,7 @@ import Post from './post/post';
 import Chat from './chat/chat';
 import Profile from './profile/profile';
 import EditProfile from './profile/editProfile';
+import EditPost from './post/editPost'
 
 
 const App = () => {
@@ -61,6 +62,7 @@ const App = () => {
 				<Route exact path='/post/create' component={Post}/>
 				<Route exact path='/login' component={Login}/>
 				<Route exact path='/settings/:username' component={EditProfile}/>
+				<Route exact path='/posts/edit/:id' component={EditPost}/>
 				<PrivateRoute path="/" component={Home} />
 			</Switch>
 			<Footer />
