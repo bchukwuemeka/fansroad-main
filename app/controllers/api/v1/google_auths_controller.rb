@@ -14,8 +14,7 @@ class Api::V1::GoogleAuthsController < ApplicationController
           is_success: true,
           data: {user: @user}
         }, status: 200
-      end
-      if User.find_by(email:  params['profileObj'][:email])
+      elsif User.find_by(email:  params['profileObj'][:email])
         user = User.find_by(email:  params['profileObj'][:email])
         session[:user_id] = user.id
         render json: {
@@ -23,6 +22,10 @@ class Api::V1::GoogleAuthsController < ApplicationController
           is_success: true,
           data: {user: user}
         }, status: 200
+      else 
+        render json: {
+          logged_in: false
+        }, status: 401
       end
     end
   end

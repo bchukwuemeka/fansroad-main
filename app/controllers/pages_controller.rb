@@ -5,6 +5,7 @@ class PagesController < ApplicationController
     # if !current_user.authy_enabled?
     #   redirect_to user_enable_authy_path
     # end
+    
   end
   
 end

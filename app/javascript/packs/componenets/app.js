@@ -14,6 +14,8 @@ import Post from './post/post';
 import Chat from './chat/chat';
 import Profile from './profile/profile';
 import EditProfile from './profile/editProfile';
+import EditPost from './post/editPost'
+import SinglePost  from './post/SinglePost'
 
 
 const App = () => {
@@ -56,12 +58,14 @@ const App = () => {
 				{/* <Route exact path='/' component={SignIn} /> */}
 				<Route exact path='/register' component={Registration}/>
 				<Route exact path='/notification' component={Notification}/>
-				<Route exact path='/profile' component={Profile}/>
+				<Route exact path='/user/:username' component={Profile}/>
 				<Route exact path='/chat' component={Chat}/>
 				<Route exact path='/post/create' component={Post}/>
 				<Route exact path='/login' component={Login}/>
-				<Route exact path='/settings/profile' component={EditProfile}/>
-				<PrivateRoute path="/" component={Home} />
+				<Route exact path='/posts/show/:id' component={SinglePost}/>
+				<Route exact path='/settings/:username' component={EditProfile}/>
+				<Route exact path='/posts/edit/:id' component={EditPost}/>
+				<PrivateRoute exact path="/" component={Home} />
 			</Switch>
 			<Footer />
 		</div>

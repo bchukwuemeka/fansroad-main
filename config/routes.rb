@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  default_url_options :host => "localhost:3000"
   get "signed_in", to: "pages#signed_in"
   root 'pages#home'
 
@@ -7,9 +8,17 @@ Rails.application.routes.draw do
       resources :sessions, only: [:create, :destroy]
       resources :registrations, only: [:create]
       resources :posts
+      resources :comments
+      resources :likes
       get "logged_in", to: "sessions#logged_in"
+      post "likes", to: "likes#create"
+      delete "likes/:id", to: "likes#destroy"
       delete "logout", to: "sessions#destroy"
-      resources :users
+      resources :users, only: [:index, :destroy]
+      get "users/:username", to: "users#show"
+      get "user/:id", to: "users#showWithId"
+      get "posts/:id", to: "posts#show"
+      patch "posts/:id", to: "posts#update"
       post '/omniauth/facebook/callback' => 'omniauths#redirect_callbacks'
       post '/omniauth/google/callback' => 'google_auths#redirect_callbacks'
       # devise_scope :user do

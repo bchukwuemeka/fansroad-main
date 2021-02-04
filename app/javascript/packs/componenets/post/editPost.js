@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import { useHistory, NavLink } from "react-router-dom";
+import { useHistory, NavLink, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
 // import { GETCURRENTUSER, LOGGEDINSTATUS } from '../action/type'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowLeft, faImage, faPlus, faLifeRing } from '@fortawesome/free-solid-svg-icons';
 
-const Post = () => {
+const EditPost = () => {
 	const loggedInStatus = useSelector(state => state.loggedInStatus.payload);
 	const current_user = JSON.parse(localStorage.getItem("current_user"))
-	
+	const {id} = useParams()
 	
 	const [state, setState] = useState({
 		description: '',
@@ -17,6 +17,25 @@ const Post = () => {
 		images_url: [],
 		message: ''
 	});
+	const [post, setPost] = useState({})
+	// const images = post.images.map(image =>image.signed_id)
+
+	const getPost = async () => {
+		try {
+					const res = await axios.get(`http://localhost:3000/api/v1/posts/${id}`);
+					// const imagesObj = urlToObject(res.data.images)
+					setState({description: res.data.description,
+					featured_image: res.data.images.map(image =>image.signed_id),
+					images_url: res.data.images})
+					setPost(res.data)
+			} catch (err) {
+					console.error(err);
+			}
+	}
+	useEffect(() => {
+		getPost()
+  }, [])
+
 	
 	const handleChange = (event) => {
 		const name = event.target.name
@@ -27,6 +46,7 @@ const Post = () => {
 		console.log('image: ', state.featured_image)
 		console.log('url: ', state.images_url)
 	}
+	
 	
 	const onImageChange = e => { 
 		const files = e.target.files
@@ -43,20 +63,21 @@ const Post = () => {
 	};
 	const handleSubmit = async event => {
 		event.preventDefault();
-		const endpoint = `/api/v1/posts`;
-		const formData = new FormData();
-    formData.append('description', state.description);
-		formData.append('user_id', current_user.id);
+		const endpoint = `/api/v1/posts/${post.id}`;
+		const formD = new FormData();
+    formD.append('description', state.description);
+		formD.append('user_id', current_user.id);
 		for(let i =0; i<state.featured_image.length; i++){
-			formData.append('images[]', state.featured_image[i]);
+			formD.append('images[]', state.featured_image[i]);
 		}
 		
+		console.log("formdata", formD)
 		try {
-					const res = await axios.post( endpoint,
-					formData
+					const res = await axios.patch(endpoint,
+				formD
 					,
 						{ withCredentials: true })
-						setState({...state, message: 'Post created'})
+						setState({...state, message: 'Post updated successfully'})
 						console.log('post: ', res)
 						setState({ description: '', featured_image: [], images_url: [], message: ''});
 				}catch(error)  {
@@ -65,17 +86,20 @@ const Post = () => {
 			}
 	}	
 
-	const removeImage = (image, index) =>{
+	const removeImage = (image) =>{
 		const images_url = state.images_url.filter(function(e) { return e !== image })
-		const featured_image = state.featured_image.splice(index, 1)
+		// const featured_image = state.featured_image.splice(state.featured_image.indexOf(image), 1)
+
+		const featured_image = state.featured_image.filter(function(e) { return e !== image.signed_id })
+		console.log(image)
 		setState({ images_url: images_url, featured_image: featured_image})
-		console.log('image_url: ',state.images_url)
+		console.log('images: ',state.featured_image)
 	}
 	
 	const displayImage = state.images_url.map((image_url, i) =>
-  	<li key={image_url}> <img  src={image_url} width="100px" height="130px" />
+  	<li key={image_url.signed_id}> <img  src={image_url['url'] || image_url} width="100px" height="130px" />
 			<span 
-				 onClick={() => removeImage(image_url, i)}>
+				 onClick={() => removeImage(image_url)}>
 			 x</span> 
 		</li>
 	);
@@ -93,22 +117,21 @@ const Post = () => {
 		</div>
 	 )
 	};
-	useEffect(() => {
-  }, [])
+
 
 		return (
 			<>	
 				<span className='notice'>{state.message}</span>
 				<div className=" pt-1 postDiv">
 					<div className="post-name"> 
-						<h4> <NavLink   exact to='/'><FontAwesomeIcon icon={faArrowLeft} size="1x" /> </NavLink> NEW POST 
+						<h4> <NavLink   exact to='/'><FontAwesomeIcon icon={faArrowLeft} size="1x" /> </NavLink> EDIT POST 
 						</h4>
 					</div>
 					<ul className="d-flex preview-image">
 								 { state.images_url.length > 0  && displayImage }
 								 { state.images_url.length > 0 && addButton() }
 					</ul>
-					<form onSubmit={handleSubmit} >
+					<form onSubmit={handleSubmit}  encType="multipart/form-data">
  	 					<div className="form-floating mb-4">
 							<textarea
 								type="password" name="description" id="form1Example2"
@@ -131,7 +154,7 @@ const Post = () => {
 						
 						<button type="submit" className="btn btn-primary post-btn" 
 						disabled={ !state.description && state.images_url.length <=0 }>
-							Post
+							EDIT
 						</button>
 
 					</form>
@@ -143,7 +166,7 @@ const Post = () => {
 		)
 }
 
-export default Post;
+export default EditPost;
 
 
 

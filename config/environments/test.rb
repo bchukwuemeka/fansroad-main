@@ -34,7 +34,7 @@ Rails.application.configure do
   config.action_controller.allow_forgery_protection = false
 
   # Store uploaded files on the local file system in a temporary directory.
-  config.active_storage.service = :test
+  config.active_storage.service = :cloudinary
 
   config.action_mailer.perform_caching = false
 
@@ -57,4 +57,5 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
 end
