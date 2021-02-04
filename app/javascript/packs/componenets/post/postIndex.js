@@ -11,8 +11,7 @@ const PostIndex = ( ) => {
 	const history = useHistory();
 	const dispatch = useDispatch();
 	const [posts, setPosts] = useState([]);
-	
-	
+
 	const getposts = async () => {
 			try {
 					const res = await axios.get('http://localhost:3000/api/v1/posts');
@@ -31,7 +30,7 @@ const PostIndex = ( ) => {
 	
 	const displayPosts = posts.map((post, i) =>
   	<div className="" key={i}> 
-			<PostShow post={post} />
+			<PostShow post={post}  />
 		</div>
 	);
 

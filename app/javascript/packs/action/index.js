@@ -1,4 +1,4 @@
-import { GETCURRENTUSER, LOGGEDINSTATUS, GETPOSTS } from './type';
+import { GETCURRENTUSER, LOGGEDINSTATUS, GETCOMMENTS } from './type';
 
 export const getCurrentUser = file => ({
 	type: GETCURRENTUSER,
@@ -10,6 +10,10 @@ export const loggedInStatus = text => ({
 	payload: text
 })
 
+export const getComments = comments => ({
+	type: LOGGEDINSTATUS,
+	payload: comments
+})
 
 //  export const getposts = async () => {
 //     try {

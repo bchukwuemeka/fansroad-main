@@ -6,6 +6,7 @@
 .loginDiv button {
   border-radius: 30px;
   height: 50px;
+	font-size: 20px;
 }
 
 .loginDiv button img {
@@ -379,7 +380,7 @@
 }
 
 .post-show-images {
-	max-height: 700px;
+	max-height: 500px;
 }
 .post-date p{
 	font-size: 13px;
@@ -404,9 +405,99 @@
 		right: 0px;
 		height: auto;
 		max-width:  170px;
-		border-radius: 10px;
+		border-radius: 18px;
 }
 .post-dots .dots{
 	padding: 0px;
+}
+.post-comment .fa-2x{
+	font-size: 21px !important;
+	color: #e0e2e4;
+	margin-right: 15px !important;
+	cursor: pointer;
+}
+.post-comment .fa-2x:hover{
+	color: #2a9df4;
+}
+.post-comment .tip-dollar{
+	margin-right: 0px !important;
+}
+.post-icons{
+	width: 35%;
+}
+.singlePost{
+	width: 90%;
+	margin: 0 auto;
+}
+/* comment section */
+.comment-box{
+	background-color: #f3f4f5;
+}
+.comment-tbox{
+	width: 85%;
+}
+.comment-tbox form textarea {
+	border: none;
+	background-color: #f3f4f5;
+	width: 100%;
+	color: black;
+}
+.comment-tbox form textarea:focus{
+	background-color: #f3f4f5;
+	color: black;
+}
+.comment-tbox form {
+	width: 100%;
+	position: relative;
+}
+.comment-tbox form button {
+	  position: absolute;
+    right: -60px;
+    top: 4px;
+		background-color: #2a9df4;
+		border-radius: 50%;
+		columns: #ffffff;
+		padding: 7px;
+		border: none;
+}
+.comment-tbox form button .fa-2x{
+	font-size: 24px !important;
+	color: #fff !important;
+}
+.comment-tbox img {
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+	margin-right: 7px;
+}
+.comment-display a img{
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+	margin-right: 12px;
+}
+.like-comment{
+	margin-left: auto;
+	color: #dcd9d9 !important;
+	cursor: pointer;
+	font-size: 18px !important;
+}
+
+.like-comment:hover{
+	color: #2a9df4 !important;
+}
+.disappear{
+	display: none;
+}
+.show-modal{
+	z-index: 2000;
+}
+.comment-delete a{
+	color: #918f8f;
+	text-decoration: none;
+	cursor: pointer;
+}
+.b-blue{
+	color: #0894ff !important;
 }
 /*# sourceMappingURL=main.css.map */

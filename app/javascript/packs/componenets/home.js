@@ -43,7 +43,7 @@ const Home = ( ) => {
 	}
 
     return (
-			<div className="home-div row">
+			<div className="home-div row mb-4">
 				{displayContent()}
 				<div className="col-md-8">
 					<PostIndex />

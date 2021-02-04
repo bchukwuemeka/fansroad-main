@@ -26,7 +26,7 @@ class Api::V1::PostsController < ApplicationController
   
     def update
       post = Post.find_by(id: params[:id])
-      if post.update(update_params)
+      if post.update(post_params)
         render json: {
           messages: "Post Successfully Updated",
           is_success: true,
@@ -61,8 +61,5 @@ class Api::V1::PostsController < ApplicationController
       params.permit(:description, :user_id, :id, images: [])
     end
 
-     def update_params
-      params.permit(:description, :user_id, :id, images: [])
-    end
    
   end

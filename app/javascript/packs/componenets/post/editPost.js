@@ -18,13 +18,14 @@ const EditPost = () => {
 		message: ''
 	});
 	const [post, setPost] = useState({})
+	// const images = post.images.map(image =>image.signed_id)
 
 	const getPost = async () => {
 		try {
 					const res = await axios.get(`http://localhost:3000/api/v1/posts/${id}`);
 					// const imagesObj = urlToObject(res.data.images)
 					setState({description: res.data.description,
-					featured_image: res.data.images,
+					featured_image: res.data.images.map(image =>image.signed_id),
 					images_url: res.data.images})
 					setPost(res.data)
 			} catch (err) {
@@ -35,37 +36,7 @@ const EditPost = () => {
 		getPost()
   }, [])
 
-	// const urlToObject= (arr)=> {
-	// 	const imgs = []
-		
-	// 	for(let j = 0; j<arr.length; j++){
-			
-	// 		const ab = new ArrayBuffer(arr[j].length)
-	// 		const ia = new Uint8Array(ab);
-	// 		for (let i = 0; i < ia.length; i++) {
-	// 			console.log(arr[j].length)
-	// 			ia[i] = arr[j].charCodeAt(i);
-	// 		}
-	// 		const blob = new Blob([ia], {
-	// 			type: 'image/jpeg'
-	// 		});
-	// 		const file = new File([blob], "image.jpg");
-	// 		console.log(file)
-
-	// 		imgs.push(file)
-	// 	}
-	// 	return imgs
-	// }
-
-
-	// const convertBlobToObj = (images ) => {
-	// 	let imgs = []
-	// 	for(let i = 0; i<images.length; i++){
-	// 		imgs.push(URL.revokeObjectURL(images[i]))
-	// 	}
-	// 	console.log('converted blob', imgs)
-	// 	return imgs
-	// }
+	
 	const handleChange = (event) => {
 		const name = event.target.name
 		const value = event.target.value
@@ -75,6 +46,7 @@ const EditPost = () => {
 		console.log('image: ', state.featured_image)
 		console.log('url: ', state.images_url)
 	}
+	
 	
 	const onImageChange = e => { 
 		const files = e.target.files
@@ -114,18 +86,20 @@ const EditPost = () => {
 			}
 	}	
 
-	const removeImage = (image, index) =>{
+	const removeImage = (image) =>{
 		const images_url = state.images_url.filter(function(e) { return e !== image })
-		const featured_image = state.featured_image.splice(index, 1)
-		// const featured_image = state.featured_image.filter(function(e) { return e !== image })
+		// const featured_image = state.featured_image.splice(state.featured_image.indexOf(image), 1)
+
+		const featured_image = state.featured_image.filter(function(e) { return e !== image.signed_id })
+		console.log(image)
 		setState({ images_url: images_url, featured_image: featured_image})
-		console.log('image_url: ',state.images_url)
+		console.log('images: ',state.featured_image)
 	}
 	
 	const displayImage = state.images_url.map((image_url, i) =>
-  	<li key={image_url}> <img  src={image_url} width="100px" height="130px" />
+  	<li key={image_url.signed_id}> <img  src={image_url['url'] || image_url} width="100px" height="130px" />
 			<span 
-				 onClick={() => removeImage(image_url, i)}>
+				 onClick={() => removeImage(image_url)}>
 			 x</span> 
 		</li>
 	);
@@ -157,7 +131,7 @@ const EditPost = () => {
 								 { state.images_url.length > 0  && displayImage }
 								 { state.images_url.length > 0 && addButton() }
 					</ul>
-					<form onSubmit={handleSubmit} >
+					<form onSubmit={handleSubmit}  encType="multipart/form-data">
  	 					<div className="form-floating mb-4">
 							<textarea
 								type="password" name="description" id="form1Example2"
